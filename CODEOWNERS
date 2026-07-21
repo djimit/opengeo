@@ -1,0 +1,28 @@
+# OpenGEO Rule Ownership
+# Each working group owns their category
+
+/rules/crawlability/      @opengeo/search-working-group
+/rules/structured-data/   @opengeo/structured-data-working-group
+/rules/content/           @opengeo/content-working-group
+/rules/citations/         @opengeo/citations-working-group
+/rules/entities/          @opengeo/entities-working-group
+/rules/accessibility/     @opengeo/a11y-working-group
+/rules/performance/       @opengeo/performance-working-group
+/rules/security/          @opengeo/security-working-group
+
+# Core architecture
+/packages/core/           @DjimIT/architecture
+/packages/rule-engine/    @DjimIT/architecture
+/packages/crawler/        @DjimIT/architecture
+
+# CLI and GitHub Action
+/apps/cli/                @DjimIT/cli-team
+/apps/github-action/      @DjimIT/cli-team
+
+# Dashboard
+/apps/dashboard/          @DjimIT/dashboard-team
+
+# Documentation
+/docs/                    @DjimIT/docs-team
+/README.md                @DjimIT/docs-team
+/GOVERNANCE.md            @DjimIT/maintainers

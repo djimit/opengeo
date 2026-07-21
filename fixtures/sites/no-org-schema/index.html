@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Missing Organization Schema</title>
+  <meta name="description" content="Has JSON-LD but no Organization type">
+  <link rel="canonical" href="https://example.org/no-org-schema/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Test Page"
+  }
+  </script>
+</head>
+<body>
+  <h1>Has JSON-LD but no Organization</h1>
+  <p>This page has JSON-LD but no Organization schema. OpenGEO should flag this with GEO-DATA-002.</p>
+</body>
+</html>

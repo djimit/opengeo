@@ -1,0 +1,44 @@
+name: "OpenGEO Audit"
+description: "Run an AI Search Readiness audit on your website"
+author: "DjimIT"
+
+branding:
+  icon: "search"
+  color: "blue"
+
+inputs:
+  url:
+    description: "Target URL to audit"
+    required: true
+  max_pages:
+    description: "Maximum pages to crawl"
+    required: false
+    default: "50"
+  depth:
+    description: "Crawl depth"
+    required: false
+    default: "2"
+  render:
+    description: "Render mode: static or javascript"
+    required: false
+    default: "static"
+  policy:
+    description: "Crawler policy: strict, balanced, permissive"
+    required: false
+    default: "balanced"
+  fail_on:
+    description: "Fail on severity: critical, high, medium, low"
+    required: false
+    default: "critical"
+  output:
+    description: "Output file path"
+    required: false
+    default: "opengeo-report.json"
+  format:
+    description: "Output format: json, markdown, sarif"
+    required: false
+    default: "json"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

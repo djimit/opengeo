@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Site With Organization Schema</title>
+  <meta name="description" content="A site that has Organization schema and should NOT trigger GEO-DATA-002">
+  <link rel="canonical" href="https://example.org/with-org-schema/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Example Organization",
+    "url": "https://example.org",
+    "sameAs": ["https://twitter.com/example"],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-555-0100",
+      "contactType": "customer service"
+    }
+  }
+  </script>
+</head>
+<body>
+  <h1>Site With Organization Schema</h1>
+  <p>This site has a valid Organization schema and should NOT trigger GEO-DATA-002.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+  <h2>About Us</h2>
+  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
+  <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+</body>
+</html>

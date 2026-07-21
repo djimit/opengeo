@@ -1,0 +1,25 @@
+name: Test GitHub Action
+
+on:
+  pull_request:
+  schedule:
+    - cron: "0 5 * * 1"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          url: https://example.org
+          max_pages: "10"
+          depth: "2"
+          fail_on: critical
+          format: sarif
+          output: opengeo.sarif
+      - name: Upload SARIF to Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: opengeo.sarif

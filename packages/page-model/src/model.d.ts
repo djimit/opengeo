@@ -1,0 +1,12 @@
+import type { NormalizedPageModel, Link } from "@opengeo/shared";
+export declare function emptyPage(url: string): NormalizedPageModel;
+export declare function hasNoindex(page: NormalizedPageModel): boolean;
+export declare function hasNofollow(page: NormalizedPageModel): boolean;
+export declare function getHeadingsText(page: NormalizedPageModel): string[];
+export declare function getInternalLinks(page: NormalizedPageModel): Link[];
+export declare function getExternalLinks(page: NormalizedPageModel): Link[];
+export declare function getJsonLdTypes(page: NormalizedPageModel): string[];
+export declare function hasJsonLdType(page: NormalizedPageModel, type: string): boolean;
+export declare function getMetaContent(page: NormalizedPageModel, name: string): string | undefined;
+export declare function getHeaderValue(page: NormalizedPageModel, name: string): string | undefined;
+export declare function isOrphanPage(page: NormalizedPageModel, allPages: NormalizedPageModel[]): boolean;
