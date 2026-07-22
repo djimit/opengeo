@@ -10,6 +10,9 @@ OpenGEO is an open-source CLI, GitHub Action, and web dashboard that analyzes we
 
 **No rankings sold. No magic scores. Only evidence-backed findings with concrete patches.**
 
+<img width="1536" height="1024" alt="OpenGEO" src="https://github.com/user-attachments/assets/1c6cda9f-4934-46f6-a923-ed5120160a3a" />
+
+
 ---
 
 ## Quick Start
