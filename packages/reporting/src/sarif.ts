@@ -4,17 +4,6 @@ const SARIF_VERSION = "2.1.0"
 const SARIF_SCHEMA =
   "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json"
 
-const RULE_ID_TO_CWE: Record<string, string> = {
-  "GEO-CRAWL": "CWE-35",
-  "GEO-DATA": "CWE-345",
-  "GEO-CONTENT": "CWE-838",
-  "GEO-CITE": "CWE-345",
-  "GEO-ENTITY": "CWE-345",
-  "GEO-SEC": "CWE-693",
-  "GEO-PERF": "CWE-400",
-  "GEO-GOV": "CWE-284",
-}
-
 function severityToLevel(severity: Finding["severity"]): "error" | "warning" | "note" {
   switch (severity) {
     case "critical":
@@ -28,9 +17,6 @@ function severityToLevel(severity: Finding["severity"]): "error" | "warning" | "
 }
 
 function findingToResult(finding: Finding): SarifResult {
-  const rulePrefix = finding.id.split("-")[1]!
-  const cwe = RULE_ID_TO_CWE[rulePrefix] ?? "CWE-710"
-
   return {
     ruleId: finding.id,
     level: severityToLevel(finding.severity),
@@ -39,7 +25,7 @@ function findingToResult(finding: Finding): SarifResult {
     },
     locations: [
       {
-        physicalArtifactLocation: {
+        physicalLocation: {
           artifactLocation: {
             uri: finding.evidence.url,
           },
@@ -68,23 +54,6 @@ function findingToResult(finding: Finding): SarifResult {
       maintainer: finding.rule_metadata.maintainer,
       evidence_level: finding.rule_metadata.evidence_level,
     },
-    taxonomies: [
-      {
-        name: "CWE",
-        shortDescription: {
-          text: "Common Weakness Enumeration",
-        },
-        taxa: [
-          {
-            id: cwe,
-            name: cwe,
-            shortDescription: {
-              text: `Related weakness: ${cwe}`,
-            },
-          },
-        ],
-      },
-    ],
   }
 }
 
@@ -202,26 +171,13 @@ interface SarifResult {
   message: { text: string }
   locations?: SarifLocation[]
   properties?: Record<string, unknown>
-  taxonomies?: SarifTaxonomy[]
 }
 
 interface SarifLocation {
-  physicalArtifactLocation: {
+  physicalLocation: {
     artifactLocation: { uri: string }
     region?: { startLine?: number; snippet?: { text: string } }
   }
-}
-
-interface SarifTaxonomy {
-  name: string
-  shortDescription?: { text: string }
-  taxa: SarifTaxon[]
-}
-
-interface SarifTaxon {
-  id: string
-  name: string
-  shortDescription?: { text: string }
 }
 
 interface SarifAutomationDetails {
