@@ -23,23 +23,6 @@ function findingToResult(finding: Finding): SarifResult {
     message: {
       text: `${finding.title}. ${finding.recommendation.rationale}`,
     },
-    locations: [
-      {
-        physicalLocation: {
-          artifactLocation: {
-            uri: finding.evidence.url,
-          },
-          region: finding.evidence.lines
-            ? {
-                startLine: 1,
-                snippet: {
-                  text: finding.evidence.snippet ?? finding.evidence.lines.join("\n"),
-                },
-              }
-            : undefined,
-        },
-      },
-    ],
     properties: {
       category: finding.category,
       confidence: finding.confidence,
@@ -169,15 +152,7 @@ interface SarifResult {
   ruleId: string
   level: string
   message: { text: string }
-  locations?: SarifLocation[]
   properties?: Record<string, unknown>
-}
-
-interface SarifLocation {
-  physicalLocation: {
-    artifactLocation: { uri: string }
-    region?: { startLine?: number; snippet?: { text: string } }
-  }
 }
 
 interface SarifAutomationDetails {
