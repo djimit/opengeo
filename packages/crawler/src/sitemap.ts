@@ -11,6 +11,26 @@ export interface SitemapParseResult {
   isIndex: boolean
 }
 
+function xmlBlocks(xml: string, tag: string): string[] {
+  const lower = xml.toLowerCase()
+  const open = `<${tag}>`
+  const close = `</${tag}>`
+  const blocks: string[] = []
+  let cursor = 0
+
+  while (cursor < xml.length) {
+    const start = lower.indexOf(open, cursor)
+    if (start < 0) break
+    const contentStart = start + open.length
+    const end = lower.indexOf(close, contentStart)
+    if (end < 0) break
+    blocks.push(xml.slice(contentStart, end))
+    cursor = end + close.length
+  }
+
+  return blocks
+}
+
 export async function fetchAndParseSitemaps(
   robotsTxt: string | null,
   origin: string,
@@ -69,10 +89,7 @@ export function parseSitemapXml(xml: string): SitemapParseResult {
   // Check if it's a sitemap index
   if (xml.includes("<sitemapindex") || xml.includes("<sitemapIndex>")) {
     isIndex = true
-    const sitemapRegex = /<sitemap>([\s\S]*?)<\/sitemap>/gi
-    let match
-    while ((match = sitemapRegex.exec(xml)) !== null) {
-      const block = match[1]!
+    for (const block of xmlBlocks(xml, "sitemap")) {
       const loc = extractXmlValue(block, "loc")
       if (loc) {
         urls.push({
@@ -85,10 +102,7 @@ export function parseSitemapXml(xml: string): SitemapParseResult {
   }
 
   // Regular URL set
-  const urlRegex = /<url>([\s\S]*?)<\/url>/gi
-  let match
-  while ((match = urlRegex.exec(xml)) !== null) {
-    const block = match[1]!
+  for (const block of xmlBlocks(xml, "url")) {
     const loc = extractXmlValue(block, "loc")
     if (!loc) continue
 

@@ -60,6 +60,12 @@ test("parseSitemapXml: handles invalid XML gracefully", () => {
   assert.equal(result.urls.length, 0)
 })
 
+test("parseSitemapXml: stops at an unclosed URL block", () => {
+  const xml = `<urlset><url>${"x".repeat(100_000)}</urlset>`
+
+  assert.deepEqual(parseSitemapXml(xml).urls, [])
+})
+
 test("filterSitemapUrls: excludes patterns", () => {
   const entries = [
     { url: "https://example.org/page1" },
