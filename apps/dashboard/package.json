@@ -12,9 +12,9 @@
     "clean": "rm -rf .next"
   },
   "dependencies": {
-    "@opengeo/shared": "workspace:*",
     "@opengeo/reporting": "workspace:*",
-    "next": "^15.5.22",
+    "@opengeo/shared": "workspace:*",
+    "next": "^15.5.24",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
