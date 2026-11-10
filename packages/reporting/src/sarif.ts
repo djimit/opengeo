@@ -19,14 +19,22 @@ function severityToLevel(severity: Finding["severity"]): "error" | "warning" | "
 // GitHub Code Scanning only accepts file-scheme / repo-relative artifact URIs,
 // so a crawled page URL is mapped to a relative path ("host/path"); the full
 // page URL is kept as a logical location and in the result properties.
+function trimTrailingSlashes(value: string): string {
+  let end = value.length
+  while (end > 0 && value[end - 1] === "/") end--
+  return value.slice(0, end)
+}
+
 function pageUrlToArtifactUri(pageUrl: string): string {
+  let path: string
   try {
     const u = new URL(pageUrl)
-    const path = `${u.host}${u.pathname}`.replace(/\/+$/, "")
-    return path || "unknown"
+    path = `${u.host}${u.pathname}`
   } catch {
-    return pageUrl.replace(/^[a-z]+:\/\//i, "").replace(/\/+$/, "") || "unknown"
+    const schemeEnd = pageUrl.indexOf("://")
+    path = schemeEnd === -1 ? pageUrl : pageUrl.slice(schemeEnd + 3)
   }
+  return trimTrailingSlashes(path) || "unknown"
 }
 
 function findingToResult(finding: Finding, targetUrl: string): SarifResult {
