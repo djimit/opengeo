@@ -16,7 +16,21 @@ function severityToLevel(severity: Finding["severity"]): "error" | "warning" | "
   }
 }
 
+// GitHub Code Scanning only accepts file-scheme / repo-relative artifact URIs,
+// so a crawled page URL is mapped to a relative path ("host/path"); the full
+// page URL is kept as a logical location and in the result properties.
+function pageUrlToArtifactUri(pageUrl: string): string {
+  try {
+    const u = new URL(pageUrl)
+    const path = `${u.host}${u.pathname}`.replace(/\/+$/, "")
+    return path || "unknown"
+  } catch {
+    return pageUrl.replace(/^[a-z]+:\/\//i, "").replace(/\/+$/, "") || "unknown"
+  }
+}
+
 function findingToResult(finding: Finding, targetUrl: string): SarifResult {
+  const pageUrl = finding.evidence.url || targetUrl
   return {
     ruleId: finding.id,
     level: severityToLevel(finding.severity),
@@ -27,11 +41,13 @@ function findingToResult(finding: Finding, targetUrl: string): SarifResult {
     locations: [
       {
         physicalLocation: {
-          artifactLocation: { uri: finding.evidence.url || targetUrl },
+          artifactLocation: { uri: pageUrlToArtifactUri(pageUrl) },
         },
+        logicalLocations: [{ fullyQualifiedName: pageUrl, kind: "resource" }],
       },
     ],
     properties: {
+      page_url: pageUrl,
       category: finding.category,
       confidence: finding.confidence,
       severity: finding.severity,
@@ -168,6 +184,7 @@ interface SarifLocation {
   physicalLocation: {
     artifactLocation: { uri: string }
   }
+  logicalLocations?: { fullyQualifiedName: string; kind?: string }[]
 }
 
 interface SarifAutomationDetails {
