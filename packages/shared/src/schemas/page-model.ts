@@ -30,7 +30,7 @@ export type Heading = z.infer<typeof HeadingSchema>
 export const JsonLdSchema = z.object({
   type: z.string().optional(),
   raw: z.string(),
-  parsed: z.record(z.unknown()).optional(),
+  parsed: z.record(z.string(), z.unknown()).optional(),
 })
 export type JsonLd = z.infer<typeof JsonLdSchema>
 
