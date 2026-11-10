@@ -16,13 +16,21 @@ function severityToLevel(severity: Finding["severity"]): "error" | "warning" | "
   }
 }
 
-function findingToResult(finding: Finding): SarifResult {
+function findingToResult(finding: Finding, targetUrl: string): SarifResult {
   return {
     ruleId: finding.id,
     level: severityToLevel(finding.severity),
     message: {
       text: `${finding.title}. ${finding.recommendation.rationale}`,
     },
+    // GitHub Code Scanning rejects results without at least one location.
+    locations: [
+      {
+        physicalLocation: {
+          artifactLocation: { uri: finding.evidence.url || targetUrl },
+        },
+      },
+    ],
     properties: {
       category: finding.category,
       confidence: finding.confidence,
@@ -88,7 +96,7 @@ export function generateSarifReport(report: Report): string {
             rules: reportToRules(report),
           },
         },
-        results: report.findings.map(findingToResult),
+        results: report.findings.map((f) => findingToResult(f, report.metadata.target_url)),
         automationDetails: {
           id: `opengeo/${report.metadata.finished_at}`,
           description: {
@@ -152,7 +160,14 @@ interface SarifResult {
   ruleId: string
   level: string
   message: { text: string }
+  locations: SarifLocation[]
   properties?: Record<string, unknown>
+}
+
+interface SarifLocation {
+  physicalLocation: {
+    artifactLocation: { uri: string }
+  }
 }
 
 interface SarifAutomationDetails {
