@@ -5,12 +5,26 @@ on:
   schedule:
     - cron: "0 5 * * 1"
 
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+
 jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./
+      # The action lives in apps/github-action and runs dist/index.js, which is
+      # not committed: install and build the workspace before using it.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - uses: ./apps/github-action
         with:
           url: https://example.org
           max_pages: "10"
@@ -20,6 +34,6 @@ jobs:
           output: opengeo.sarif
       - name: Upload SARIF to Code Scanning
         uses: github/codeql-action/upload-sarif@v3
-        if: always()
+        if: always() && hashFiles('opengeo.sarif') != ''
         with:
           sarif_file: opengeo.sarif

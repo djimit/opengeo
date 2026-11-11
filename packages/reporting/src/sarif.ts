@@ -16,14 +16,46 @@ function severityToLevel(severity: Finding["severity"]): "error" | "warning" | "
   }
 }
 
-function findingToResult(finding: Finding): SarifResult {
+// GitHub Code Scanning only accepts file-scheme / repo-relative artifact URIs,
+// so a crawled page URL is mapped to a relative path ("host/path"); the full
+// page URL is kept as a logical location and in the result properties.
+function trimTrailingSlashes(value: string): string {
+  let end = value.length
+  while (end > 0 && value[end - 1] === "/") end--
+  return value.slice(0, end)
+}
+
+function pageUrlToArtifactUri(pageUrl: string): string {
+  let path: string
+  try {
+    const u = new URL(pageUrl)
+    path = `${u.host}${u.pathname}`
+  } catch {
+    const schemeEnd = pageUrl.indexOf("://")
+    path = schemeEnd === -1 ? pageUrl : pageUrl.slice(schemeEnd + 3)
+  }
+  return trimTrailingSlashes(path) || "unknown"
+}
+
+function findingToResult(finding: Finding, targetUrl: string): SarifResult {
+  const pageUrl = finding.evidence.url || targetUrl
   return {
     ruleId: finding.id,
     level: severityToLevel(finding.severity),
     message: {
       text: `${finding.title}. ${finding.recommendation.rationale}`,
     },
+    // GitHub Code Scanning rejects results without at least one location.
+    locations: [
+      {
+        physicalLocation: {
+          artifactLocation: { uri: pageUrlToArtifactUri(pageUrl) },
+        },
+        logicalLocations: [{ fullyQualifiedName: pageUrl, kind: "resource" }],
+      },
+    ],
     properties: {
+      page_url: pageUrl,
       category: finding.category,
       confidence: finding.confidence,
       severity: finding.severity,
@@ -88,7 +120,7 @@ export function generateSarifReport(report: Report): string {
             rules: reportToRules(report),
           },
         },
-        results: report.findings.map(findingToResult),
+        results: report.findings.map((f) => findingToResult(f, report.metadata.target_url)),
         automationDetails: {
           id: `opengeo/${report.metadata.finished_at}`,
           description: {
@@ -152,7 +184,15 @@ interface SarifResult {
   ruleId: string
   level: string
   message: { text: string }
+  locations: SarifLocation[]
   properties?: Record<string, unknown>
+}
+
+interface SarifLocation {
+  physicalLocation: {
+    artifactLocation: { uri: string }
+  }
+  logicalLocations?: { fullyQualifiedName: string; kind?: string }[]
 }
 
 interface SarifAutomationDetails {

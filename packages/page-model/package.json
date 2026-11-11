@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@opengeo/shared": "workspace:*",
-    "zod": "^3.24.0"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
