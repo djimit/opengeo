@@ -21,7 +21,7 @@
   "dependencies": {
     "@opengeo/shared": "workspace:*",
     "@opengeo/page-model": "workspace:*",
-    "playwright": "^1.49.0"
+    "playwright": "^1.65.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
