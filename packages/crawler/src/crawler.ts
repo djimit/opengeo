@@ -181,7 +181,7 @@ async function crawlPage(
   visited.add(normalizedUrl)
 
   let html: string
-  let statusCode = 0
+  let statusCode: number
   let responseHeaders = new Headers()
   let finalUrl = normalizedUrl
 

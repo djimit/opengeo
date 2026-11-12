@@ -57,7 +57,7 @@ export class RateLimiter {
     }
 
     // Calculate delay
-    let delay = this.crawlDelay ?? this.currentDelay
+    const delay = this.crawlDelay ?? this.currentDelay
 
     // Ensure minimum time between requests
     const timeSinceLast = now - this.lastRequestTime

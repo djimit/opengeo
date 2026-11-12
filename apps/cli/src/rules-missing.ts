@@ -365,7 +365,6 @@ export function registerMissingRules(engine: RuleEngine): void {
       const findings: Finding[] = []
       if (!isHomepage(ctx)) return findings
       // If we crawled pages that weren't in the sitemap, flag it
-      const sitemapUrls = new Set<string>()
       // This is a heuristic — if we found pages via internal links that are deep, they might not be in sitemap
       const deepPages = ctx.allPages.filter((p) => {
         const pathDepth = new URL(p.url).pathname.split("/").filter(Boolean).length

@@ -19,7 +19,6 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "tsc && node --test dist/__tests__/**/*.test.js",
-    "lint": "eslint src/",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist"
   },

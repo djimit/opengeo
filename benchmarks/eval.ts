@@ -10,10 +10,10 @@
  * Usage: npx tsx benchmarks/eval.ts
  */
 
-import { readFileSync, readdirSync } from "node:fs"
+import { readFileSync } from "node:fs"
 import { join } from "node:path"
 import { RuleEngine } from "@opengeo/rule-engine"
-import type { Finding, NormalizedPageModel } from "@opengeo/shared"
+import type { NormalizedPageModel } from "@opengeo/shared"
 import { registerMvpRules } from "../apps/cli/src/rules.ts"
 
 interface CorpusCase {
