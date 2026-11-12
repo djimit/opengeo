@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       # The action lives in apps/github-action and runs dist/index.js, which is
       # not committed: install and build the workspace before using it.
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
