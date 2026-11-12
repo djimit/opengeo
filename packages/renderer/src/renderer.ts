@@ -1,4 +1,4 @@
-import { chromium, type Browser, type BrowserContext, type Page } from "playwright"
+import { chromium, type Browser, type Page } from "playwright"
 import type { NormalizedPageModel } from "@opengeo/shared"
 
 export interface RenderOptions {
@@ -93,7 +93,7 @@ export async function renderPage(
   }
 }
 
-async function detectHydration(page: Page, opts: RenderOptions): Promise<boolean> {
+async function detectHydration(page: Page, _opts: RenderOptions): Promise<boolean> {
   try {
     // Check for common SPA framework indicators
     const hasReact = await page.evaluate(() => {

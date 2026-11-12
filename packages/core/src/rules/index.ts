@@ -314,7 +314,7 @@ function registerMvpRulesInline(engine: RuleEngine): void {
   })
 }
 
-function registerExtendedRulesInline(engine: RuleEngine): void {
+function registerExtendedRulesInline(_engine: RuleEngine): void {
   // Extended rules are registered from the CLI package to avoid duplication
   // The orchestrator imports from CLI for the full rule set
 }
