@@ -1,10 +1,6 @@
 import type {
   NormalizedPageModel,
   Link,
-  Heading,
-  MetaTag,
-  JsonLd,
-  HttpHeader,
 } from "@opengeo/shared"
 
 export function emptyPage(url: string): NormalizedPageModel {

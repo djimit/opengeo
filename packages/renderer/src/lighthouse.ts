@@ -37,6 +37,8 @@ export async function runLighthouse(
   url: string,
   options: { timeout_ms?: number; thresholds?: Partial<LighthouseThresholds> } = {},
 ): Promise<LighthouseResult | null> {
+  // Merged thresholds are not applied to the result yet (pre-existing gap); kept so the option's intent stays visible.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const thresholds = { ...DEFAULT_THRESHOLDS, ...options.thresholds }
 
   try {
@@ -46,7 +48,7 @@ export async function runLighthouse(
     const page = await context.newPage()
 
     // Enable CDP session for performance metrics
-    const cdp = await context.newCDPSession(page)
+    await context.newCDPSession(page)
 
     // Navigate
     await page.goto(url, { waitUntil: "networkidle", timeout: options.timeout_ms ?? 30_000 })

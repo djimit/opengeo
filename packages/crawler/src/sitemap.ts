@@ -84,11 +84,9 @@ export async function fetchAndParseSitemaps(
 
 export function parseSitemapXml(xml: string): SitemapParseResult {
   const urls: SitemapEntry[] = []
-  let isIndex = false
 
   // Check if it's a sitemap index
   if (xml.includes("<sitemapindex") || xml.includes("<sitemapIndex>")) {
-    isIndex = true
     for (const block of xmlBlocks(xml, "sitemap")) {
       const loc = extractXmlValue(block, "loc")
       if (loc) {

@@ -1,18 +1,5 @@
 import type { RuleEngine } from "@opengeo/rule-engine"
-import type { Finding, NormalizedPageModel } from "@opengeo/shared"
-
-function hasJsonLdType(jsonLd: Array<{ type?: string | string[] }>, targetType: string | string[]): boolean {
-  const targets = Array.isArray(targetType) ? targetType : [targetType]
-  return jsonLd.some((j) => {
-    if (!j.type) return false
-    const types = Array.isArray(j.type) ? j.type : [j.type]
-    return types.some((t) => targets.includes(t))
-  })
-}
-
-function isHomepage(ctx: { page: NormalizedPageModel; allPages: NormalizedPageModel[] }): boolean {
-  return ctx.page.url === ctx.allPages[0]?.url
-}
+import type { Finding } from "@opengeo/shared"
 
 /** Calculate Flesch-Kincaid readability score (simplified for Dutch/English) */
 function calculateReadability(text: string): { score: number; grade: string } {

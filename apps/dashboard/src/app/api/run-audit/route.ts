@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
-import { mkdir, writeFile } from "node:fs/promises"
+import { mkdir, readFile } from "node:fs/promises"
+import { spawn } from "node:child_process"
 import { join } from "node:path"
 import { existsSync } from "node:fs"
 
@@ -21,7 +22,6 @@ export async function POST(req: Request) {
   }
 
   return new Promise<Response>((resolve) => {
-    const { spawn } = require("node:child_process")
     const repoRoot = join(process.cwd(), "..", "..", "..", "..")
     const cliPath = join(repoRoot, "apps", "cli", "dist", "index.js")
 
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         return
       }
       try {
-        const content = await require("node:fs/promises").readFile(filepath, "utf-8")
+        const content = await readFile(filepath, "utf-8")
         const report = JSON.parse(content)
         resolve(NextResponse.json({
           filename,

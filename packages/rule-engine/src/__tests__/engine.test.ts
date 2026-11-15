@@ -45,7 +45,7 @@ test("RuleEngine: evaluate rule that returns findings", async () => {
     title: "Test finding",
     description: "Returns a finding",
     enabled: true,
-    evaluate(ctx) {
+    evaluate(_ctx) {
       return [mockFinding("TEST-002")]
     },
   })

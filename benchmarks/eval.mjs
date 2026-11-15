@@ -9,7 +9,6 @@ import { join, dirname } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const FIXTURES_DIR = join(__dirname, "..", "fixtures", "sites")
 const CORPUS_FILE = join(__dirname, "corpus.jsonl")
 
 function loadCorpus() {

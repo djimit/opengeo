@@ -34,7 +34,7 @@ const TYPE_COLORS: Record<string, string> = {
 }
 
 export default function EntityGraph() {
-  const [report, setReport] = useState<any>(null)
+  const [, setReport] = useState<any>(null)
   const [graph, setGraph] = useState<GraphData | null>(null)
   const [selected, setSelected] = useState<GraphNode | null>(null)
   const [loading, setLoading] = useState(false)
@@ -64,7 +64,6 @@ export default function EntityGraph() {
 
     // Extract entities from JSON-LD in findings evidence
     for (const finding of reportData.findings) {
-      const jsonLdMatch = finding.evidence?.raw || finding.evidence?.snippet || ""
       // Look for entity references in the finding
       if (finding.category === "entities" || finding.category === "structured-data") {
         const id = finding.id + "-" + finding.evidence.url
@@ -121,7 +120,7 @@ export default function EntityGraph() {
     const repulsion = 5000
     const attraction = 0.01
 
-    let sim = { ...graph }
+    const sim = { ...graph }
 
     for (let iter = 0; iter < iterations; iter++) {
       // Repulsion between all nodes
