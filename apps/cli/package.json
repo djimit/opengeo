@@ -21,7 +21,7 @@
     "@opengeo/bridge": "workspace:*",
     "@opengeo/patch-generator": "workspace:*",
     "commander": "^13.0.0",
-    "chalk": "^5.4.0"
+    "chalk": "^6.0.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
