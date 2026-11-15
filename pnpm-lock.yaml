@@ -61,8 +61,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/shared
       chalk:
-        specifier: ^5.4.0
-        version: 5.6.2
+        specifier: ^6.0.1
+        version: 6.0.1
       commander:
         specifier: ^13.0.0
         version: 13.1.0
@@ -1002,9 +1002,9 @@ packages:
   caniuse-lite@1.0.30001826:
     resolution: {integrity: sha512-wTB+9tIbLro/BCXwLuNV1meHE4L9dS6dArMDwgYfNBPMYScqClHyGunhkCSDtHhe/69Xl0sHlKgBVZ+fNsYtWA==}
 
-  chalk@5.6.2:
-    resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
-    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+  chalk@6.0.1:
+    resolution: {integrity: sha512-/Ce6KNm3vIbWdMlNna6RVIZ/ICQxnJxCicet5LBKK9ZffBkqzDw0xh9EiKSljdRtiIQ1S1z4YgcscUUGzNCWrA==}
+    engines: {node: '>=22'}
 
   cheerio-select@2.1.0:
     resolution: {integrity: sha512-9v9kG0LvzrlcungtnJtpGNxY+fzECQKhK4EGJX2vByejiMX84MFNQw4UxPJl3bFbTMw+Dfs37XaIkCwTZfLh4g==}
@@ -2187,7 +2187,7 @@ snapshots:
 
   caniuse-lite@1.0.30001826: {}
 
-  chalk@5.6.2: {}
+  chalk@6.0.1: {}
 
   cheerio-select@2.1.0:
     dependencies:
